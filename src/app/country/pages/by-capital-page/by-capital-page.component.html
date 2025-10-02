@@ -1,3 +1,13 @@
-<country-search-input placeholder="Buscar por capital" (value)="onSearch($event)"></country-search-input>
+<!-- country search input -->
+<country-search-input 
+  placeholder="Buscar por capital" 
+  (value)="onSearch($event)">
+</country-search-input>
 
-<country-list [countries]="countries()"></country-list>
+<!-- country list -->
+<div *ngIf="isError(); else showList">
+  <h3>{{ isError() }}</h3>
+</div>
+<ng-template #showList>
+  <country-list [countries]="countries()"></country-list>
+</ng-template>
