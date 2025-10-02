@@ -1,1 +1,16 @@
-<p>country-page works!</p>,
+<!-- Mostrar error -->
+<app-not-found [show]="!!error()"></app-not-found>
+
+<!-- Mostrar información del país -->
+<country-information-page 
+    *ngIf="country() && !loading() && !error()" 
+    [country]="country()">
+</country-information-page>
+
+<!-- Mostrar loading -->
+<div *ngIf="loading()" class="flex justify-center items-center py-16">
+    <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+        <p class="text-lg">Cargando...</p>
+    </div>
+</div>
