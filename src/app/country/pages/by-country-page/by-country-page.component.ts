@@ -1,12 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { SearchInputComponent } from '../../components/search-input/search-input.component';
-import { count } from 'rxjs';
 import { CountryListComponent } from '../../components/country-list/country-list.component';
+import { CountryService } from '../../services/country.service';
+import type { Country } from '../../interfaces/country.interface';
 
 @Component({
   selector: 'app-by-country-page',
   standalone: true,
-  imports: [SearchInputComponent, CountryListComponent],
+  imports: [CommonModule, SearchInputComponent, CountryListComponent],
   templateUrl: './by-country-page.component.html',
 })
-export class ByCountryPageComponent { }
+export class ByCountryPageComponent {
+  countryService = inject(CountryService);
+
+  isLoading = signal(false);
+  isError = signal<string | null>(null);
+  countries = signal<Country[]>([]);
+
+  onSearch(query: string) {
+    if (this.isLoading()) return;
+
+    this.isLoading.set(true);
+    this.isError.set(null);
+
+    this.countryService.searchByCountry(query).subscribe({
+      next: (countries) => {
+        this.isLoading.set(false);
+        this.countries.set(countries);
+      },
+      error: (err) => {
+        this.isLoading.set(false);
+        this.countries.set([]);
+        this.isError.set(err);
+      },
+    });
+  }
+}

@@ -5,9 +5,9 @@
 </country-search-input>
 
 <!-- country list -->
-<div *ngIf="isError(); else showList">
-  <h3>{{ isError() }}</h3>
-</div>
-<ng-template #showList>
-  <country-list [countries]="countries()"></country-list>
-</ng-template>
+<country-list 
+  [countries]="countries()"
+  [errorMessage]="isError()"
+  [isEmpty]="countries().length === 0 && !isLoading()"
+  [isLoading]="isLoading()">
+</country-list>

@@ -26,7 +26,30 @@
           </span>
         </td>
         <td>
-          <a class="link-primary cursor-pointer">Más información</a>
+          <a
+          [routerLink]="['/country/by', country.cca2]"  
+           class="link-primary cursor-pointer">Más información
+          </a>
+        </td>
+      </tr>
+
+      <tr *ngIf="errorMessage">
+        <td colspan="8" class="text-center">
+          {{ errorMessage }}
+        </td>
+      </tr>
+
+      <!-- -->
+      <tr *ngIf="countries.length === 0 && !isLoading">
+        <td colspan="8" class="text-center">
+          No se encontraron resultados
+        </td>
+      </tr>
+
+      <!-- -->
+      <tr *ngIf="isLoading">
+        <td colspan="8" class="text-center">
+          Buscando países
         </td>
       </tr>
     </tbody>

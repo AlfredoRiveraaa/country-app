@@ -14,23 +14,23 @@ import type { Country } from '../../interfaces/country.interface';
 export class ByCapitalPageComponent {
   countryService = inject(CountryService);
 
-  isLoaading = signal(false)
+  isLoading = signal(false)
   isError = signal<string|null>(null)
   countries = signal<Country[]>([])
 
   onSearch( query: string){
-    if ( this.isLoaading() ) return;
+    if ( this.isLoading() ) return;
 
-    this.isLoaading.set(true)
+    this.isLoading.set(true)
     this.isError.set(null);
 
     this.countryService.searchByCapital( query ).subscribe({
         next: ( countries ) => {
-          this.isLoaading.set(false)
+          this.isLoading.set(false)
           this.countries.set( countries )
         },
         error: ( err ) => {
-          this.isLoaading.set(false)
+          this.isLoading.set(false)
           this.countries.set([])
           this.isError.set(err)
         }
