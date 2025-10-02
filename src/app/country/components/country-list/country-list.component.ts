@@ -1,9 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Country } from '../../interfaces/country.interface';
 
 @Component({
   selector: 'country-list',
-  standalone: true,
-  imports: [],
   templateUrl: './country-list.component.html',
+  standalone: true,
+  imports: [CommonModule],
 })
-export class CountryListComponent { }
+export class CountryListComponent {
+
+  @Input()
+  public countries: Country[] = [];
+
+  trackByCca2(index: number, country: Country): string {
+    return country.cca2;
+  }
+
+}
